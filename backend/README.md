@@ -102,3 +102,157 @@ createdb trivia_test
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+
+### API Endpoints Documentation
+
+`GET '/categories'`
+
+- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category.
+- Request Arguments: None
+- Returns: An object with a single key, categories, that contains an object of id: category_string key:value pairs and success as true.
+
+```json
+{
+  "categories": { "1" : "Science",
+    "2" : "Art",
+    "3" : "Geography",
+    "4" : "History",
+    "5" : "Entertainment",
+    "6" : "Sports" },
+    "success": true
+}
+```
+
+`GET '/questions?page=${integer}'`
+
+- Fetches a paginated set of questions, a total number of questions, all categories and current category string.
+- Request Arguments: page - integer
+- Returns: An object with 10 paginated questions, total questions, object including all categories, and current category string and success as true.
+
+```json
+{
+  "questions": [
+        {
+            "id": 1,
+            "question": "The question",
+            "answer": "The answer",
+            "difficulty": 3,
+            "category": 1
+        },
+    ],
+    "total_questions": 20,
+    "categories": { 
+    "1" : "Science",
+    "2" : "Art",
+    "3" : "Geography",
+    "4" : "History",
+    "5" : "Entertainment",
+    "6" : "Sports" },
+    "currentCategory": "History",
+    "success": true,
+}
+```
+
+`GET '/categories/${id}/questions'`
+
+- Fetches questions for a cateogry specified by id request argument.
+- Request Arguments: id - integer
+- Returns: An object with questions for the specified category, total questions, and current category string and success as true.
+
+```json
+{
+  "questions": [
+        {
+            "id": 1,
+            "question": "The question",
+            "answer": "The answer",
+            "difficulty": 3,
+            "category": 1
+        },
+    ],
+    "total_questions": 100,
+    "current_category": "History",
+    "success": true
+}
+```
+
+`DELETE '/questions/${id}'`
+
+- Deletes a specified question using the id of the question.
+- Request Arguments: id - integer
+- Returns: An object with the id of the deleted question and success as true.
+
+```json
+{
+  "deleted": 5,
+  "success": true
+}
+```
+
+`POST '/quizzes'`
+
+- Sends a post request in order to get the next question of the quiz.
+- Request Arguments: 
+```json
+{
+    "previous_questions": [1, 4, 20, 15],
+    "quiz_category": "current category"
+}
+```
+- Returns: a single new question object and success as true.
+
+```json
+{
+  "deleted": 5,
+  "success": true
+}
+```
+
+`POST '/questions'`
+
+- Sends a post request in order to add a new question.
+- Request Arguments: 
+```json
+{
+    "question":  "Here's a new question string",
+    "answer":  "Here's a new answer string",
+    "difficulty": 4,
+    "category": 5,
+}
+```
+- Returns: The id of the newly created question and success as true.
+
+```json
+{
+  "success": true,
+  "created": 25,
+}
+```
+
+`POST '/questions'`
+
+- Sends a post request in order to search for a specific question by search term.
+- Request Arguments: 
+```json
+{
+  "searchTerm": "the term the user is looking for"
+}
+```
+- Returns: any array of questions, a number of total questions that met the search term, the current category string, and success as true.
+
+```json
+{
+  "questions": [
+        {
+            "id": 1,
+            "question": "The question",
+            "answer": "The answer",
+            "difficulty": 3,
+            "category": 2
+        },
+    ],
+  "total_questions": 25,
+  "current_category": "Entertainment",
+  "success": true,
+}
+```
